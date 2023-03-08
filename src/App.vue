@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="lxd_paipai">
+    <Nav />
+    <CenterBD class="centerBD" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Nav from "@/components/Nav"
+import CenterBD from "@/components/CenterBD"
 export default {
-  name: 'App',
+  name: 'Lxd_ΠΠ_Website',
   components: {
-    HelloWorld
+    Nav,
+    CenterBD,
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped lang="css">
+  #lxd_paipai{
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+  }
+  .centerBD{
+    margin-top:40px
+  }
 </style>
