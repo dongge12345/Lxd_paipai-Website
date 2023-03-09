@@ -2,19 +2,27 @@
   <div class="centerBD">
     <!-- 自我介绍video -->
     <section class="displayArea">
-        <!-- <video src="@/assets/video/大二广州聚会.mp4" class="dpVideo"></video> -->
-        <img src="@/assets/images/2.jpg" class="dpImg" alt="">
+        <RotationChart />
         <OrderOC class="orderOC"/>
     </section>
+    <!-- 左侧侧边栏 -->
+    <AsideLeft class="asideLeft" />
+    <!--  -->
   </div>
 </template>
 
 <script>
     import OrderOC from "@/components/OrderOC"
+    import RotationChart from "@/components/RotationChart"
+    import AsideLeft from "@/components/AsideLeft"
     export default {
         name:"CenterBD",
         components:{
-            OrderOC
+            OrderOC,
+            RotationChart,
+            AsideLeft,
+        },
+        mounted(){
         }
     }
 </script>
@@ -31,16 +39,28 @@
         left:50%;
         top:50%;
         transform:translate(-50%,-50%);
-        width: 40vw;
+        width: 600px;
+        max-width: 40%;
         height:100%;
         /* background-color: #aaa; */
         /* border: 1px solid #000; */
         text-align:center;
     }
-    .displayArea .dpImg{
-        height:80%;
-        border-radius: 30px 100px 30px 100px;
-        box-shadow: -5px 5px 10px black,4px -1px 4px rgba(183, 124, 5, 0.65);
+    .displayArea .rotationChart{
+        margin-top:10px;
     }
-    
+    .orderOC{
+        margin-top:5px;
+    }
+    .asideLeft{
+        position: absolute;
+        left:50px;
+        top:40px;
+        width: 20vw;
+        height: 80%;
+        background:radial-gradient(circle at 70% 80%,white 10px,transparent 40px);
+        border-right: 2px dotted rgba(255, 255, 255, 0.197);
+        border-bottom: 2px dotted rgba(255, 255, 255, 0.182);
+        box-shadow: inset -5px -5px 5px black;
+    }
 </style>

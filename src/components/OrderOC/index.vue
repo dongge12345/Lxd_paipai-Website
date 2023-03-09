@@ -94,13 +94,9 @@ export default {
 }
 .checkbox:checked ~ .lineContainer .line:first-child {
   transform: rotate(45deg);
-  /* animation:line1Act 3s;
-            animation-fill-mode: forwards; */
 }
 .checkbox:checked ~ .lineContainer .line:last-child {
   transform: rotate(-45deg);
-  /* animation:line2Act 3s;
-            animation-fill-mode: forwards; */
 }
 .checkbox:checked ~ .fiveMsg {
   margin-left: 50px;

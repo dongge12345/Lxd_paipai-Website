@@ -1,12 +1,14 @@
 <template>
   <div class="nav">
     <Rotating class="rotating" />
-    <SameAsLoading /> 
+    <SameAsLoading  @click.native="openOrCloseLight" /> 
     <ActiveNavBox class="activeNavBox" />
+    <MusicRelax class="musicRelax" title="♪(´▽｀)" @click.native="musicPlay" />
   </div>
 </template>
 
 <script>
+    import MusicRelax from '@/components/MusicRelax'
     import Rotating from '@/components/Rotating'
     import SameAsLoading from '@/components/SameAsLoading'
     import OrderOC from "@/components/OrderOC"
@@ -17,7 +19,16 @@
             Rotating,
             SameAsLoading,
             OrderOC,
-            ActiveNavBox
+            ActiveNavBox,
+            MusicRelax
+        },
+        methods:{
+            musicPlay(){
+                window.open("https://music.163.com/#/user/home?id=617260256")
+            },
+            openOrCloseLight(){
+                this.$bus.$emit("openOrClose")
+            }
         }
     }
 </script>
@@ -48,5 +59,12 @@
         left:50%;
         top:0px;
         transform:translateX(-50%) scale(0.6) ;
+    }
+    .musicRelax{
+        position: absolute;
+        right:100px;
+        top:-10px;
+        transform: scale(.2);
+        cursor:pointer;
     }
 </style>

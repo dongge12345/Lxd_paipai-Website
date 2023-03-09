@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li style="--i:1">
-        <input type="text" class="input1" onfocus="console.log('i')" />
+        <input type="text" class="input1" />
         <a href="#">相册</a>
       </li>
       <li>
@@ -27,7 +27,9 @@
 </template>
 
 <script>
-export default {};
+  export default {
+    name:'ActiveNavBox'
+  };
 </script>
 
 <style scoped lang="css">
@@ -58,7 +60,6 @@ export default {};
             height: 100%;
             width: 20%;
             display: inline-block;
-            /* background-color: pink; */
             font-size: 15px;
             border-radius: 30px;
             text-align: center;
@@ -110,16 +111,17 @@ export default {};
             height: 100%;
             left:0;
             z-index:1;
-            color:rgb(0, 0, 0);
+            color:rgb(150, 150, 150);
             font-size: 30px;
             text-decoration: none;
             transition:color .2s .2s linear,z-index .2s .1s linear;
-
+            /* mix-blend-mode: difference; */
         }
         .bgc{
             width: 20%;
             position: absolute;
-            background-color: rgb(214, 205, 189);
+            background:linear-gradient(70deg,rgb(10, 64, 57) 50%,rgb(173, 182, 119) 50%);
+            mix-blend-mode: difference;
             z-index:-999;
             left:0;
             transition:left .3s .1s cubic-bezier(0.4,1.6,1,1);
