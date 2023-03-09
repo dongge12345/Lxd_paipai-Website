@@ -3,7 +3,7 @@
     <!-- 自我介绍video -->
     <section class="displayArea">
         <!-- <video src="@/assets/video/大二广州聚会.mp4" class="dpVideo"></video> -->
-        <img src="@/assets/images/教学楼二楼黄昏长椅.jpg" class="dpImg" alt="">
+        <img src="@/assets/images/2.jpg" class="dpImg" alt="">
         <OrderOC class="orderOC"/>
     </section>
   </div>
