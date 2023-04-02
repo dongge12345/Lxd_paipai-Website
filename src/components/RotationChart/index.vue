@@ -1,12 +1,12 @@
 <template>
   <div class="rotationChart" ref="rotationChart">
     <div class="imgs" ref="imgs">
-      <img src="@/assets/images/深大信工楼傍晚美图_竞霖背影.jpg" class="dpImg" alt />
-      <img src="@/assets/images/教学楼二楼黄昏长椅.jpg" class="dpImg" alt />
-      <img src="@/assets/images/大一海岸城.jpg" class="dpImg" alt />
-      <img src="@/assets/images/斋区星巴克店前拍文科楼草坪方向.jpg" class="dpImg" alt />
-      <img src="@/assets/images/深大信工楼傍晚美图_竞霖背影.jpg" class="dpImg" alt />
-      <img src="@/assets/images/教学楼二楼黄昏长椅.jpg" class="dpImg" alt />
+      <img src="@/assets/images/shendaxingongloubangwanmeitu_jinglinbeiying.jpg" class="dpImg" alt />
+      <img src="@/assets/images/jiaoxuelouerlouhuanghunchangyi.jpg" class="dpImg" alt />
+      <img src="@/assets/images/dayihaiancheng.jpg" class="dpImg" alt />
+      <img src="@/assets/images/zhaiquxingbakedianqianpaiwenkeloucaopingfangxiang.jpg" class="dpImg" alt />
+      <img src="@/assets/images/shendaxingongloubangwanmeitu_jinglinbeiying.jpg" class="dpImg" alt />
+      <img src="@/assets/images/jiaoxuelouerlouhuanghunchangyi.jpg" class="dpImg" alt />
     </div>
   </div>
 </template>
