@@ -31,7 +31,8 @@
     .centerBD{
         position: relative;
         width: 100vw;
-        height: 80vh;
+        height: 560px;
+        max-height:70vh;
         background-color: #3e4720;
     }
     .displayArea{
@@ -39,7 +40,7 @@
         left:50%;
         top:50%;
         transform:translate(-50%,-50%);
-        width: 600px;
+        width: 34%;
         max-width: 40%;
         height:100%;
         /* background-color: #aaa; */
@@ -58,9 +59,27 @@
         top:40px;
         width: 20vw;
         height: 80%;
+        overflow: hidden;
         background:radial-gradient(circle at 70% 80%,white 10px,transparent 40px);
-        border-right: 2px dotted rgba(255, 255, 255, 0.197);
-        border-bottom: 2px dotted rgba(255, 255, 255, 0.182);
         box-shadow: inset -5px -5px 5px black;
+        padding-top:15px;
+        font-size:12px;
     }
+    /* .asideLeft::before{
+        content:"";
+        background:repeating-linear-gradient(transparent 0px, transparent 3px, rgba(255, 255, 255, 0.197) 3px, rgba(255, 255, 255, 0.197) 10px );
+        position: absolute;
+        right:0px;
+        top:3%;
+        width: 2px;
+        height: 97.4%;
+    }
+    .asideLeft::after{
+        content:"";
+        background: repeating-linear-gradient(90deg,transparent 0px, transparent 3px, rgba(255, 255, 255, 0.197) 3px, rgba(255, 255, 255, 0.197) 10px );
+        position: absolute;
+        bottom:0px;
+        width: 100%;
+        height: 2px;
+    } */
 </style>
