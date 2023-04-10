@@ -1,19 +1,18 @@
 <template>
   <div id="lxd_paipai">
     <Nav />
-    <CenterBD class="centerBD" />
+    <!-- 中间展示部分 -->
+    <router-view name="center" class="center"></router-view>
     <canvas class="canvas"></canvas>
   </div>
 </template>
 
 <script>
 import Nav from "@/components/Nav"
-import CenterBD from "@/components/CenterBD"
 export default {
   name: 'Lxd_ΠΠ_Website',
   components: {
-    Nav,
-    CenterBD,
+    Nav
   },
   data(){
     return{
@@ -35,7 +34,7 @@ export default {
       ct.beginPath()
       ct.clearRect(0,0,canvas.width,canvas.height)
       var radial = ct.createRadialGradient(p.x,p.y,p.r*0.7,p.x,p.y,p.r*2)
-      radial.addColorStop(0,'rgba(255,255,255,0)')
+      radial.addColorStop(0,'rgba(255,255,255,0.3)')
       radial.addColorStop(1,'rgba(0,0,0,0.75)')
       ct.fillStyle = radial
       ct.fillRect(0,0,canvas.width,canvas.height)
@@ -62,14 +61,18 @@ export default {
 }
 </script>
 
-<style scoped lang="css">
+<style>
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box
+}
   #lxd_paipai{
     width: 100vw;
     height: 100vh;
     background-color: #000000;
-  }
-  .centerBD{
-    margin-top:40px
+    display: flex;
+    flex-direction:column
   }
   .canvas{
     position: fixed;
@@ -80,5 +83,11 @@ export default {
     background-color: #ffffff18;
     z-index:9999;
     pointer-events: none;
+  }
+  .center{
+    /* margin-top:40px; */
+    /* height: 100%;
+    width: 100%;
+    overflow: hidden; */
   }
 </style>

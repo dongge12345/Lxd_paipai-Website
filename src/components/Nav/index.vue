@@ -1,26 +1,27 @@
 <template>
-  <div class="nav">
-    <Rotating class="rotating" />
+  <div class="nav" ref="nav">
+    <Rotating class="rotating" ref="rotating"/>
     <SameAsLoading  @click.native="openOrCloseLight" /> 
-    <ActiveNavBox class="activeNavBox" />
-    <MusicRelax class="musicRelax" title="♪(´▽｀)" @click.native="musicPlay" />
+    <ActiveNavBox class="activeNavBox" ref="activeNavBox" />
+    <MusicRelax class="musicRelax" title="♪(´▽｀)" @click.native="musicPlay" ref="musicRelax"/>
+    <ProfilePicture class="profilePicture" ref="profilePicture"/>
   </div>
 </template>
 
 <script>
-    import MusicRelax from '@/components/MusicRelax'
-    import Rotating from '@/components/Rotating'
-    import SameAsLoading from '@/components/SameAsLoading'
-    import OrderOC from "@/components/OrderOC"
-    import ActiveNavBox from "@/components/ActiveNavBox"
+    import MusicRelax from '@/components/Nav/MusicRelax'
+    import Rotating from '@/components/Nav/Rotating'
+    import SameAsLoading from '@/components/Nav/SameAsLoading'
+    import ActiveNavBox from "@/components/Nav/ActiveNavBox"
+    import ProfilePicture from "@/components/ProfilePicture"
     export default {
         name:"Nav",
         components:{
             Rotating,
             SameAsLoading,
-            OrderOC,
             ActiveNavBox,
-            MusicRelax
+            MusicRelax,
+            ProfilePicture
         },
         methods:{
             musicPlay(){
@@ -28,7 +29,33 @@
             },
             openOrCloseLight(){
                 this.$bus.$emit("openOrClose")
+            },
+            showAfterResize(){
+                // 1200 1074 940 
+                if(this.$refs['nav'].clientWidth < 940){
+                    this.$refs['rotating'].$el.hidden = true
+                    this.$refs['musicRelax'].$el.hidden = true
+                    this.$refs['profilePicture'].$el.hidden = true
+                }else if(this.$refs['nav'].clientWidth < 1074){
+                    this.$refs['rotating'].$el.hidden = false
+                    this.$refs['musicRelax'].$el.hidden = true
+                    this.$refs['profilePicture'].$el.hidden = true
+                }else if(this.$refs['nav'].clientWidth < 1200){
+                    this.$refs['rotating'].$el.hidden = false
+                    this.$refs['musicRelax'].$el.hidden = false
+                    this.$refs['profilePicture'].$el.hidden = true
+                }else{
+                    this.$refs['rotating'].$el.hidden = false
+                    this.$refs['musicRelax'].$el.hidden = false
+                    this.$refs['profilePicture'].$el.hidden = false
+                }
             }
+        },
+        mounted(){
+            this.showAfterResize()
+            window.addEventListener('resize',()=>{
+                this.showAfterResize()
+            })
         }
     }
 </script>
@@ -44,9 +71,10 @@
     }
     .rotating{
         position: absolute;
-        right:0px;
+        right:-40px;
         top:-50px;
-        transform:scale(0.4)
+        transform:scale(0.4);
+        z-index:100;
     }
     .orderOC{
         position: absolute;
@@ -57,14 +85,21 @@
     .activeNavBox{
         position: absolute;
         left:50%;
-        top:0px;
-        transform:translateX(-50%) scale(0.6) ;
+        top:-5px;
+        transform:translateX(-50%) scale(0.5);
     }
     .musicRelax{
         position: absolute;
-        right:100px;
-        top:-10px;
+        right:50px;
+        top:-20px;
         transform: scale(.2);
         cursor:pointer;
+    }
+    
+    .profilePicture{
+        position: absolute;
+        right: 200px;
+        top:-35px;
+        --w:40px
     }
 </style>

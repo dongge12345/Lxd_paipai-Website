@@ -12,9 +12,9 @@
 </template>
 
 <script>
-    import OrderOC from "@/components/OrderOC"
-    import RotationChart from "@/components/RotationChart"
-    import AsideLeft from "@/components/AsideLeft"
+    import OrderOC from "@/components/CenterBD/OrderOC"
+    import RotationChart from "@/components/CenterBD/RotationChart"
+    import AsideLeft from "@/components/CenterBD/AsideLeft"
     export default {
         name:"CenterBD",
         components:{
