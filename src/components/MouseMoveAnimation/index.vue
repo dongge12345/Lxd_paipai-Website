@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/cartoon character.png" alt="">
-    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/草堆.png" style="margin-left:-100px" alt="">
-    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/草地.png" style="margin-left:100px" alt="">
-    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/花朵小人.png" style="filter:blur(2px)" alt="">
-    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/花丛.png" style="filter:blur(0px)" alt="">
+    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/haystack.png" style="margin-left:-100px" alt="">
+    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/grass.png" style="margin-left:100px" alt="">
+    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/littleManOnFlower.png" style="filter:blur(2px)" alt="">
+    <img class="mouseMoveImg" src="@/assets/images/mouseMoveAnimation/floweringShrubs.png" style="filter:blur(0px)" alt="">
   </div>
 </template>
 

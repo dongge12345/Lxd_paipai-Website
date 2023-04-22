@@ -6,6 +6,18 @@
     <div class="pictureWall" ref="pictureWall">
         <img v-for="picture of picturesUrl" :src="require('@/assets/' + picture.pictureUrl)" :key="picture.id" alt="">
     </div>
+    <ul class="loading">
+        <li style="--i:1">L</li>
+        <li style="--i:2">O</li>
+        <li style="--i:3">A</li>
+        <li style="--i:4">D</li>
+        <li style="--i:5">I</li>
+        <li style="--i:6">N</li>
+        <li style="--i:7">G</li>
+        <li style="--i:9">.</li>
+        <li style="--i:11">.</li>
+        <li style="--i:13">.</li>
+    </ul>
   </div>
 </template>
 
@@ -15,9 +27,6 @@
         name:"TimeCard",
         data(){
             return {
-                ifRenewWallFinish:true,
-                renewWallTimer:undefined,
-                preColumnH:[]
             }
         },
         computed:{
@@ -28,33 +37,20 @@
             year(value){
                 this.$store.dispatch('photoAlbum/getPictures',value)
             },
-            picturesUrl:{
-                handler(value){
-                    console.log('value',value,this.$refs['pictureWall'],this.$refs['pictureWall'].children.length)
-                    // let imgs = [...this.$refs['pictureWall'].children]
-                    let wall = this.$refs['pictureWall']
-                    // console.log('update',imgs)
-                    this.renewWall()
-                    wall.style.opacity = 0
-                    this.$nextTick(()=>{
-                        setTimeout(()=>{
-                            this.renewWall()
-                            wall.style.opacity = 1
-                        },500)
-                    })
-
-                },
-                immediate:true,
-
-            }
             
         },
         mounted(){
+            this.$refs['pictureWall'].style.opacity = 0
+            document.querySelector('.loading').style.display = "block"
+            this.renewWall()
             window.addEventListener('resize',()=>{
                 this.renewWall()
             })
         },
         updated(){
+            document.querySelector('.loading').style.display = "block"
+            this.$refs['pictureWall'].style.opacity = 0
+            this.renewWall()
         },
         methods:{
             renderPic(src){
@@ -62,60 +58,55 @@
                 return img
             },
             renewWall(){
-                if(this.ifRenewWallFinish){
-                    this.renewWallTimer = setInterval(()=>{
-                        this.ifRenewWallFinish = false
-                        let imgs = [...this.$refs['pictureWall'].children]
-                        for(let i in imgs){
-                            console.log('img',imgs[i].offsetWidth,imgs[i].offsetHeight)
-                        }
-                        let wall = this.$refs['pictureWall']
-                        if(imgs.length){
-                            let wallW = wall.offsetWidth
-                            let picW  = 21
-                            imgs[0].style.width = picW + "%"
-                            picW = imgs[0].offsetWidth
-                            let columnNum = Math.floor(wallW / picW)
-                            let crackW = wallW % picW / (columnNum + 1)
-                            let crackH = 10
-                            let columnH = Array(columnNum).fill(0)
-                            
-                            for(let i = 0;i < imgs.length;i++){
-                                imgs[i].style.width = picW + "px"
-                                // console.log('picW',picW)
-                                // // imgs[i].style.width = picW + "px"
-                                
-                                let min = columnH.reduce((pre,now,index)=>{
-                                if(pre[0] > now){
-                                    pre = [now,index]
-                                }
-                                return pre
-                                },[columnH[0],0])
-                                imgs[i].style.left = crackW * (min[1]+1) + picW * min[1] + "px"
-                                imgs[i].style.top = columnH[min[1]] + crackH + "px"
-                                columnH[min[1]] += crackH + imgs[i].offsetHeight
-                            }
-                            wall.style.height = columnH.reduce((pre,now,index)=>{
-                                if(pre[0] < now){
-                                pre = [now,index]
-                                }
-                                return pre
-                            },[columnH[0],0])[0] + crackH + "px"
-                            
-
-
-                            this.ifRenewWallFinish = true
-                            if(String(this.preColumnH) === String(columnH)){
-                                console.log("*********************************")
-                                clearInterval(this.renewWallTimer)
-                            }else{
-                                console.log('------')
-                                this.preColumnH = columnH
-                            }
-                        }
-
-                    },10)
+                let imgs = [...this.$refs['pictureWall'].children]
+                for(let i in imgs){
+                    if(!imgs[i].complete){
+                        let timer = setTimeout(()=>{
+                            this.renewWall()
+                            clearTimeout(timer)
+                        },100)
+                        return
+                    }
                 }
+
+
+                let wall = this.$refs['pictureWall']
+                if(imgs.length){
+                    let wallW = wall.offsetWidth
+                    let picW  = 21
+                    imgs[0].style.width = picW + "%"
+                    picW = imgs[0].offsetWidth
+                    let columnNum = Math.floor(wallW / picW)
+                    let crackW = wallW % picW / (columnNum + 1)
+                    let crackH = 10
+                    let columnH = Array(columnNum).fill(0)
+                    
+                    for(let i = 0;i < imgs.length;i++){
+                        imgs[i].style.width = picW + "px"
+                        
+                        
+                        let min = columnH.reduce((pre,now,index)=>{
+                        if(pre[0] > now){
+                            pre = [now,index]
+                        }
+                        return pre
+                        },[columnH[0],0])
+                        imgs[i].style.left = crackW * (min[1]+1) + picW * min[1] + "px"
+                        imgs[i].style.top = columnH[min[1]] + crackH + "px"
+                        columnH[min[1]] += crackH + imgs[i].offsetHeight
+                    }
+                    wall.style.height = columnH.reduce((pre,now,index)=>{
+                        if(pre[0] < now){
+                        pre = [now,index]
+                        }
+                        return pre
+                    },[columnH[0],0])[0] + crackH + "px"
+
+                }
+                this.$refs['pictureWall'].style.opacity = 1
+                document.querySelector('.loading').style.display = "none"
+
+                    
             }
 
         },
@@ -144,5 +135,30 @@
         position: absolute;
         width: 100px;
         border-radius: 10px;
+    }
+    ul.loading{
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        list-style:none;
+    }
+    ul.loading li{
+        color:white;
+        display: inline-block;
+        animation:loadingMove 1s calc(var(--i)/10*1s - 4s) infinite linear;
+        font-weight:700;
+        margin-left:2px;
+    }
+    @keyframes loadingMove{
+        0%{
+            transform:translateY(-20%)
+        }
+        50%{
+            transform:translateY(20%)
+        }
+        100%{
+            transform:translateY(-20%)
+        }
     }
 </style>
