@@ -33,7 +33,7 @@ export default {
   /* width: 30px; */
   height: 30px;
   border-radius: 15px;
-  background-color: #ffffff1a;
+  background-color: #00000066;
   overflow: hidden;
   transition: width 3s linear;
   /*  */
@@ -53,7 +53,7 @@ export default {
   height: 100%;
   padding: 3px 3px 6px 3px;
   transition: all 3s;
-  color:rgba(255, 255, 255, 0.45);
+  color:black;
 }
 .fiveMsg a {
   display: inline-block;
@@ -61,7 +61,7 @@ export default {
 }
 
 .line {
-  border-top: 1px solid #b0b0b044;
+  border-top: 1px solid black;
   width: 40%;
   position: absolute;
   left: 30%;
@@ -87,7 +87,7 @@ export default {
   cursor: pointer;
 }
 .checkbox:checked ~ .lineContainer .line {
-  border-color: rgb(44, 0, 94);
+  border-color: black;
   top: 50%;
   transition: top 0.5s ease-in-out, bottom 0.5s ease-in-out,
     border-color 0.5s ease-in-out, transform 0.5s ease-in-out 0.5s;

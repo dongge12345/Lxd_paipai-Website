@@ -3,23 +3,23 @@
     <ul>
       <li style="--i:1">
         <input type="text" class="input1" ref="input1"/>
+        <a href="#" @click="enterCenter">主页</a>
+      </li>
+      <li>
+        <input type="text" class="input2"/>
         <a href="#" @click="enterPhotoAlbum">相册</a>
       </li>
       <li>
-        <input type="text" class="input2" />
+        <input type="text" class="input3" />
         <a href="#" @click="enterDiary">日志</a>
       </li>
       <li>
-        <input type="text" class="input3" />
-        <a href="#">作品链接</a>
-      </li>
-      <li>
         <input type="text" class="input4" />
-        <a href="#">收藏</a>
+        <a href="#" @click="enterDailyStudy">日常学习</a>
       </li>
       <li>
         <input type="text" class="input5" />
-        <a href="#">未来</a>
+        <a href="#" @click="enterCollection">收藏</a>
       </li>
       <li class="bgc"></li>
     </ul>
@@ -40,6 +40,21 @@
       enterDiary(e){
         e.preventDefault()
         this.$router.push({name:'diary'})
+        e.target.previousSibling.focus()
+      },
+      enterCollection(e){
+        e.preventDefault()
+        this.$router.push({name:'collection'})
+        e.target.previousSibling.focus()
+      },
+      enterDailyStudy(e){
+        e.preventDefault()
+        this.$router.push({name:'dailyStudy'})
+        e.target.previousSibling.focus()
+      },
+      enterCenter(e){
+        e.preventDefault()
+        this.$router.push({name:'center'})
         e.target.previousSibling.focus()
       }
     },
@@ -137,7 +152,7 @@
         .bgc{
             width: 20%;
             position: absolute;
-            background:linear-gradient(70deg,rgb(10, 64, 57) 50%,rgb(173, 182, 119) 50%);
+            background:linear-gradient(70deg,#4d2401 50%,rgb(65, 62, 1) 50%);
             mix-blend-mode: difference;
             z-index:-999;
             left:0;

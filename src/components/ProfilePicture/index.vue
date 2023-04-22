@@ -13,7 +13,7 @@ export default {
         --w:60px;
         --wNum:100;
         --b:5px;
-        --s:1;
+        --s:0.8;
         --p:40px;
         --pNum:40;
         transform:scale(var(--s));
@@ -46,6 +46,6 @@ export default {
     }
 
     img:hover{
-        --s:1.5
+        --s:1.7
     }
 </style>

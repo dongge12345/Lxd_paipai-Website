@@ -103,7 +103,8 @@ export default {
     background-color: #aaaaaa6d;
     width: 70%;
     /* min-width: 1000px; */
-    height: 70%;
+    height: 90%;
+    min-height: 250px;
     float:left;
     border-radius: 10px;
     margin-left:100px;

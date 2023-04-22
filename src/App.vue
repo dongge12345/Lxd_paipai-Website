@@ -2,17 +2,24 @@
   <div id="lxd_paipai">
     <Nav />
     <!-- 中间展示部分 -->
-    <router-view name="center" class="center"></router-view>
-    <canvas class="canvas"></canvas>
+    <router-view name="center" class="indexCenter"></router-view>
+    <MouseMoveAnimation class="mouseMoveAnimation" />
+    <canvas class="canvasIndex"></canvas>
+    <span class="profilePictureLine"></span>
+    <ProfilePicture class="profilePicture" ref="profilePicture" title="回到主页" @click.native="$router.push({name:'center'})"/>
   </div>
 </template>
 
 <script>
 import Nav from "@/components/Nav"
+import MouseMoveAnimation from '@/components/MouseMoveAnimation'
+import ProfilePicture from "@/components/ProfilePicture"
 export default {
   name: 'Lxd_ΠΠ_Website',
   components: {
-    Nav
+    Nav,
+    MouseMoveAnimation,
+    ProfilePicture
   },
   data(){
     return{
@@ -20,7 +27,7 @@ export default {
     }
   },
   mounted(){
-    let canvas = document.querySelector('.canvas')
+    let canvas = document.querySelector('.canvasIndex')
     let ct = canvas.getContext('2d')
     let p = {
       x:0,
@@ -57,7 +64,21 @@ export default {
       that.openOrClose = that.openOrClose === 1 ? 0 : 1
     })
   },
+  watch:{
+    $route:{
+        handler(newValue){
+            this.$nextTick(()=>{
+              if(newValue.name === 'center'){
+                document.querySelector('.mouseMoveAnimation').style.display = "block"
+              }else{
+                document.querySelector('.mouseMoveAnimation').style.display = "none"
+              }
+            })
 
+        },
+        immediate:true
+    }
+  }
 }
 </script>
 
@@ -74,7 +95,7 @@ export default {
     display: flex;
     flex-direction:column
   }
-  .canvas{
+  .canvasIndex{
     position: fixed;
     left:0;
     top:0;
@@ -84,10 +105,50 @@ export default {
     z-index:9999;
     pointer-events: none;
   }
-  .center{
-    /* margin-top:40px; */
-    /* height: 100%;
+  .indexCenter{
+    z-index:9998;
+  }
+  .mouseMoveAnimation{
+    height: 100px;
     width: 100%;
-    overflow: hidden; */
+    color:white;
+    position: absolute;
+    bottom:0;
+    overflow: hidden;
+    z-index:10000;
+    /* background-color: pink; */
+  }
+  .profilePictureLine{
+    position: fixed;
+    display: block;
+    right:129px;
+    width: 2px;
+    height: calc(60vh + 70px);
+    background-color: rgb(242,192,86);
+    z-index: 99999;
+    transition:all 1s;
+  }
+  .profilePicture{
+      position:fixed;
+      right:100px;
+      top:60vh;
+      --w:40px;
+      z-index:100000;
+      animation:ppAct .5s 2 linear;
+  }    
+  @keyframes ppAct {
+      0%{
+          clip-path:ellipse(50% 40% at 50% 75%)
+      }
+      50%{
+          clip-path:ellipse(50% 10% at 50% 75%)
+      }
+      100%{
+          clip-path:ellipse(50% 40% at 50% 75%)
+      }
+      
+  }
+  .profilePicture:hover{
+      transform:scale(1.2)
   }
 </style>

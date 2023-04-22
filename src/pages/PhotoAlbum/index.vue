@@ -49,6 +49,7 @@
 <style scoped lang="css">
     .timeCard-enter,.timeCard-leave-to{
         top:-100%;
+
     }
     .timeCard-enter-active,.timeCard-leave-active{
         transition:top 1s;
@@ -63,6 +64,17 @@
         background-repeat: no-repeat;
         background-size:100%;
         background-position: 0 40%;
+        animation:photoAlbumEnterAct .5s linear;
+    }
+    @keyframes photoAlbumEnterAct {
+        0%{
+            transform:translateY(-100%);
+            clip-path: inset(100% 0 0 0);
+        }
+        100%{
+            clip-path: inset(0 0 0 0);
+        }
+        
     }
     .photoAlbum .content h1{
         padding:10px 0;

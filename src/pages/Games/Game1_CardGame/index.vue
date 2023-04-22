@@ -9,7 +9,7 @@
         <div class="tmpContainer" @dragover="$event.preventDefault()" @drop="drop($event)">
             <span>暂存区</span>
         </div>
-        <p style="float:left;width:100%;padding-left:20px" @click="answerShow = !answerShow">显示答案:</p>
+        <p style="float:left;width:100%;padding-left:20px;margin-top:10px;" @click="answerShow = !answerShow">显示答案:</p>
         <div class="answer" v-show="answerShow">
             <ul>
                 <li v-for="(color,index) in colors" :key="index" :style="{'backgroundColor':'#'+color}"></li>
@@ -33,9 +33,25 @@ export default {
         this.renewColors()
         this.$refs.question.innerHTML = this.colors.map(item=>"#"+item)
         this.productCards()
-        window.addEventListener('resize',this.productCards)
+        // window.addEventListener('resize',this.productCards)
     },
     methods:{
+        ifRight(){
+            console.log('card',typeof this.$refs.cardContainer)
+            let cardDivLst = [...this.$refs.cardContainer]
+            let answerLst = cardDivLst.map(item=>{
+                try{
+                    let result = item.children[0].id
+                    return result
+                }catch(err){
+                    return ""
+                }
+                
+            })
+            console.log('4',answerLst.join(''),this.colorsMix.join(''),this.colors.join(''))
+            return answerLst.join('') === this.colors.join('')
+
+        },
         renewColors(){
             let count = Math.floor(Math.random() * 3 + 4)
             let colorsLst = []
@@ -85,6 +101,11 @@ export default {
             }else{
             e.target.appendChild(document.getElementById(id))
             }
+            if(this.ifRight()){
+                if(confirm('答案正确，是否刷新题目')){
+                    this.productCards()
+                }
+            }
         }
     }
 }
@@ -104,6 +125,8 @@ export default {
         background-color: #aaaaaa40;
         width: 100%;
         height: 70%;
+        min-height:260px;
+        padding:10px 0;
     }
     .cardContainer{
         --w:65;
@@ -142,7 +165,9 @@ export default {
         width: 500px;
         height: 50px;
         float:left;
+        overflow: hidden;
         margin-left:30px;
+        padding-top:10px;
     }
     .answer ul{
         list-style:none;

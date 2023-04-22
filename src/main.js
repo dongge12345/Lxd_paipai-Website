@@ -5,6 +5,7 @@ import router from '@/router'
 import QRCode from 'qrcode'
 Vue.use(QRCode)
 Vue.config.productionTip = false
+Vue.prototype.websiteName = 'Lxd_ΠΠ_Website'
 import '@/mock/mock.js'
 new Vue({
   render: h => h(App),

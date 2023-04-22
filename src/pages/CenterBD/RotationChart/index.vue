@@ -42,7 +42,9 @@
                 }
             },3000)
             window.addEventListener('resize',()=>{
-                width = this.$refs.rotationChart.offsetWidth
+                if(this.$refs.rotationChart){
+                    width = this.$refs.rotationChart.offsetWidth
+                }
             })
         },
         beforeDestroy(){
@@ -57,17 +59,20 @@
         width:100%;
         height:80%;
         border-radius: 30px 100px 30px 100px;
-        box-shadow: -5px 5px 10px black,4px -1px 4px rgba(183, 124, 5, 0.65);
+        box-shadow: -5px 5px 10px black,4px -1px 4px rgba(255, 255, 255, 0.65);
         overflow:hidden;
     }
     .rotationChart .imgs{
-        position: absolute;
+        /* position: absolute; */
         width:100%;
         height: 100%;
         display: flex;
         transition:all 1s linear;
+        z-index:2;
     }
     .imgs .dpImg{
         width: 100%;
+        height: 100%;
+        z-index:2;
     }
 </style>

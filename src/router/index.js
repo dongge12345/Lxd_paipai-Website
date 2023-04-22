@@ -6,6 +6,9 @@ import Game1_CardGame from '@/pages/Games/Game1_CardGame'
 import Others from '@/pages/Games/Others'
 import PhotoAlbum from '@/pages/PhotoAlbum'
 import Diary from '@/pages/Diary'
+import Collection from '@/pages/Collection'
+import {showOrRemoveLoading} from '@/utils/loading'
+import DailyStudy from '@/pages/DailyStudy'
 Vue.use(VueRouter)
 
 const routes = [
@@ -57,11 +60,32 @@ const routes = [
         components:{
             center:Diary
         }
+    },{
+        path:'/collection',
+        name:'collection',
+        components:{
+            center:Collection
+        }
+    },{
+        path:'/dailyStudy',
+        name:'dailyStudy',
+        components:{
+            center:DailyStudy
+        }
     }
 ]
 
 const router = new VueRouter({
     routes
+})
+let loading = document.createElement('div')
+router.beforeEach((to,from,next)=>{
+    showOrRemoveLoading(loading,true)
+    next()
+})
+router.afterEach((to,from)=>{
+    document.title = Vue.prototype.websiteName + "  " + to.name
+    showOrRemoveLoading(loading,false)
 })
 
 export default router

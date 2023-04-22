@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="font-size:12px">
     <h3 class="h3">
         技术栈以及项目
         <div class="specialBtn">

@@ -15,6 +15,9 @@
         name:"TimeCard",
         data(){
             return {
+                ifRenewWallFinish:true,
+                renewWallTimer:undefined,
+                preColumnH:[]
             }
         },
         computed:{
@@ -25,20 +28,33 @@
             year(value){
                 this.$store.dispatch('photoAlbum/getPictures',value)
             },
+            picturesUrl:{
+                handler(value){
+                    console.log('value',value,this.$refs['pictureWall'],this.$refs['pictureWall'].children.length)
+                    // let imgs = [...this.$refs['pictureWall'].children]
+                    let wall = this.$refs['pictureWall']
+                    // console.log('update',imgs)
+                    this.renewWall()
+                    wall.style.opacity = 0
+                    this.$nextTick(()=>{
+                        setTimeout(()=>{
+                            this.renewWall()
+                            wall.style.opacity = 1
+                        },500)
+                    })
+
+                },
+                immediate:true,
+
+            }
             
         },
         mounted(){
-            this.renewWall()
             window.addEventListener('resize',()=>{
                 this.renewWall()
             })
         },
         updated(){
-            this.$nextTick(()=>{
-                setTimeout(()=>{
-                    this.renewWall()
-                },50)
-            })
         },
         methods:{
             renderPic(src){
@@ -46,41 +62,60 @@
                 return img
             },
             renewWall(){
-                let imgs = [...this.$refs['pictureWall'].children]
-                let wall = this.$refs['pictureWall']
-                if(imgs.length){
-                    let wallW = wall.offsetWidth
-                    let picW  = 21
-                    imgs[0].style.width = picW + "%"
-                    picW = imgs[0].offsetWidth
-                    let columnNum = Math.floor(wallW / picW)
-                    let crackW = wallW % picW / (columnNum + 1)
-                    let crackH = 10
-                    let columnH = Array(columnNum).fill(0)
-                    for(let i = 0;i < imgs.length;i++){
-                        imgs[i].style.width = picW + "px"
-                        // console.log('picW',picW)
-                        // // imgs[i].style.width = picW + "px"
-                        
-                        let min = columnH.reduce((pre,now,index)=>{
-                        if(pre[0] > now){
-                            pre = [now,index]
+                if(this.ifRenewWallFinish){
+                    this.renewWallTimer = setInterval(()=>{
+                        this.ifRenewWallFinish = false
+                        let imgs = [...this.$refs['pictureWall'].children]
+                        for(let i in imgs){
+                            console.log('img',imgs[i].offsetWidth,imgs[i].offsetHeight)
                         }
-                        return pre
-                        },[columnH[0],0])
-                        
-                        imgs[i].style.left = crackW * (min[1]+1) + picW * min[1] + "px"
-                        imgs[i].style.top = columnH[min[1]] + crackH + "px"
-                        columnH[min[1]] += crackH + imgs[i].offsetHeight
-                    }
-                    wall.style.height = columnH.reduce((pre,now,index)=>{
-                        if(pre[0] < now){
-                        pre = [now,index]
+                        let wall = this.$refs['pictureWall']
+                        if(imgs.length){
+                            let wallW = wall.offsetWidth
+                            let picW  = 21
+                            imgs[0].style.width = picW + "%"
+                            picW = imgs[0].offsetWidth
+                            let columnNum = Math.floor(wallW / picW)
+                            let crackW = wallW % picW / (columnNum + 1)
+                            let crackH = 10
+                            let columnH = Array(columnNum).fill(0)
+                            
+                            for(let i = 0;i < imgs.length;i++){
+                                imgs[i].style.width = picW + "px"
+                                // console.log('picW',picW)
+                                // // imgs[i].style.width = picW + "px"
+                                
+                                let min = columnH.reduce((pre,now,index)=>{
+                                if(pre[0] > now){
+                                    pre = [now,index]
+                                }
+                                return pre
+                                },[columnH[0],0])
+                                imgs[i].style.left = crackW * (min[1]+1) + picW * min[1] + "px"
+                                imgs[i].style.top = columnH[min[1]] + crackH + "px"
+                                columnH[min[1]] += crackH + imgs[i].offsetHeight
+                            }
+                            wall.style.height = columnH.reduce((pre,now,index)=>{
+                                if(pre[0] < now){
+                                pre = [now,index]
+                                }
+                                return pre
+                            },[columnH[0],0])[0] + crackH + "px"
+                            
+
+
+                            this.ifRenewWallFinish = true
+                            if(String(this.preColumnH) === String(columnH)){
+                                console.log("*********************************")
+                                clearInterval(this.renewWallTimer)
+                            }else{
+                                console.log('------')
+                                this.preColumnH = columnH
+                            }
                         }
-                        return pre
-                    },[columnH[0],0])[0] + crackH + "px"
+
+                    },10)
                 }
-                
             }
 
         },
