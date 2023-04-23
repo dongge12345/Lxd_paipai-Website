@@ -18,9 +18,9 @@ export default {
     enterGamePage(){
       this.$store.dispatch('games/changeGamesShow')
       if(this.$store.state.games.gamesShow){
-        this.$router.push({name:'games'})
+        this.$router.push({name:'games'}).catch(this.duplicatedRouteCallbackFn)
       }else{
-        this.$router.push({name:'center'})
+        this.$router.push({name:'center'}).catch(this.duplicatedRouteCallbackFn)
       }
     }
   }

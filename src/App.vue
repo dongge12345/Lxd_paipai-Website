@@ -6,7 +6,7 @@
     <MouseMoveAnimation class="mouseMoveAnimation" />
     <canvas class="canvasIndex"></canvas>
     <span class="profilePictureLine"></span>
-    <ProfilePicture class="profilePicture" ref="profilePicture" title="回到主页" @click.native="$router.push({name:'center'})"/>
+    <ProfilePicture class="profilePicture" ref="profilePicture" title="回到主页" @click.native="$router.push({name:'center'}).catch(duplicatedRouteCallbackFn)"/>
   </div>
 </template>
 
@@ -83,11 +83,14 @@ export default {
 </script>
 
 <style>
-*{
-  padding:0;
-  margin:0;
-  box-sizing: border-box
-}
+  *{
+    padding:0;
+    margin:0;
+    box-sizing: border-box
+  }
+  ul{
+    list-style:none;
+  }
   #lxd_paipai{
     width: 100vw;
     height: 100vh;

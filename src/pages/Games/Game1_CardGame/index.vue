@@ -33,11 +33,9 @@ export default {
         this.renewColors()
         this.$refs.question.innerHTML = this.colors.map(item=>"#"+item)
         this.productCards()
-        // window.addEventListener('resize',this.productCards)
     },
     methods:{
         ifRight(){
-            console.log('card',typeof this.$refs.cardContainer)
             let cardDivLst = [...this.$refs.cardContainer]
             let answerLst = cardDivLst.map(item=>{
                 try{
@@ -68,7 +66,6 @@ export default {
             this.colors = colorsLst
         },
         productCards(){
-            // console.log('this',this,this.$el.offsetWidth,this.$refs['cardContainer'])
             let colors = JSON.parse(JSON.stringify(this.colors))
             let w1 = this.$el.offsetWidth / (colors.length + 1)
             let colorW = w1 * 0.65
@@ -95,7 +92,6 @@ export default {
         },
         drop(e){
             let id = e.dataTransfer.getData('text').split(" ")[0]
-            console.log('drop id',id,e.target)
             if(e.target.nodeName === "SPAN"){
                 e.target.parentNode.appendChild(document.getElementById(id))
             }else{

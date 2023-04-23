@@ -1,7 +1,10 @@
 <template>
   <div class="gamesPage">
-    <div class="gamesSelectWall" ref="wall" :style="{'opacity':wallOpacity}">
-      <img @click="renewGame" v-for="(game,index) in gamesRoute" :key="index" :data-routename="game" :src="require(`@/assets/images/gamesWall/${gamePictures[index]}`)" alt="">
+    <div class="gamesCardContianer">
+      <div class="gamesSelectWall" ref="wall" :style="{'opacity':wallOpacity}">
+        <img @click="renewGame" v-for="(game,index) in gamesRoute" :key="index" :data-routename="game" :src="require(`@/assets/images/gamesWall/${gamePictures[index]}`)" alt="">
+      </div>
+      <div class="gameCardLoading"></div>
     </div>
     <div class="playArea">
       <router-view name="playArea"></router-view>
@@ -23,11 +26,22 @@ export default {
       renewGame(e){
         if(e.target.nodeName==="IMG"){
           let routeName = e.target.dataset.routename
-          this.$router.push({name:routeName})
+          this.$router.push({name:routeName}).catch(this.duplicatedRouteCallbackFn)
         }
       },
       renewWall(){
+        this.wallOpacity = 0
+        document.querySelector('.gameCardLoading').style.display = "block"
         let imgs = [...document.querySelector('.gamesSelectWall').children]
+        for(let i in imgs){
+          if(!imgs[i].complete){
+            let timer = setTimeout(()=>{
+              this.renewWall()
+              clearTimeout(timer)
+            },100)
+            return
+          }
+        }
         let wall = this.$refs['wall']
         if(wall){
           let wallW = wall.offsetWidth
@@ -57,6 +71,8 @@ export default {
             return pre
           },[columnH[0],0])[0] + crackH + "px"
         }
+        this.wallOpacity = 1
+        document.querySelector('.gameCardLoading').style.display = "none"
         
       }
     },
@@ -64,25 +80,38 @@ export default {
       window.addEventListener('resize',()=>{
         this.renewWall()
       })
-      setTimeout(()=>{
-        this.renewWall()
-        this.wallOpacity = 1
-      },100)
+      this.renewWall()
+
+      // 调用utils工具函数中的loading创建一个loading效果
+      let containerDom = document.querySelector('.gameCardLoading')
+      this.waitingLoading(containerDom,1,0.8)
     },
 }
 </script>
 
 <style scoped lang="css">
+  .gameCardLoading{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+  }
   .gamesPage{
     padding:30px;
     background:linear-gradient(#134,#895,#fea);
     height: 100%;
     display: flex;
   }
-  .gamesSelectWall{
-    background: linear-gradient(#790ce7,#0d021d);
+  .gamesCardContianer{
+    position: relative;
     width: 20%;
     min-width:200px;
+  }
+  .gamesSelectWall{
+    background: linear-gradient(#790ce7,#0d021d);
+    width: 100%;
     color:rgba(0, 255, 85, 0.769);
     font-family: 'Courier New', Courier, monospace;
     padding-top:10px;

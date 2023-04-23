@@ -7,7 +7,7 @@ import Others from '@/pages/Games/Others'
 import PhotoAlbum from '@/pages/PhotoAlbum'
 import Diary from '@/pages/Diary'
 import Collection from '@/pages/Collection'
-import {showOrRemoveLoading} from '@/utils/loading'
+import {showOrRemoveLoading} from '@/utils/routeLoading'
 import DailyStudy from '@/pages/DailyStudy'
 Vue.use(VueRouter)
 

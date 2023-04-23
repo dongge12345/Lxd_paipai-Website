@@ -33,28 +33,28 @@
       enterPhotoAlbum(e){
         // 这里发现点击a后路由地址没有变化，所以考虑到可能是a标签的默认行为导致，所以使用preventDefault阻止默认行为
         e.preventDefault()
-        this.$router.push({name:'photoAlbum'})
+        this.$router.push({name:'photoAlbum'}).catch(this.duplicatedRouteCallbackFn)
         // 避免点击后，鼠标不在focus聚焦于当前input，js代码实现手动聚焦previousSibling上一个兄弟元素
         e.target.previousSibling.focus()
       },
       enterDiary(e){
         e.preventDefault()
-        this.$router.push({name:'diary'})
+        this.$router.push({name:'diary'}).catch(this.duplicatedRouteCallbackFn)
         e.target.previousSibling.focus()
       },
       enterCollection(e){
         e.preventDefault()
-        this.$router.push({name:'collection'})
+        this.$router.push({name:'collection'}).catch(this.duplicatedRouteCallbackFn)
         e.target.previousSibling.focus()
       },
       enterDailyStudy(e){
         e.preventDefault()
-        this.$router.push({name:'dailyStudy'})
+        this.$router.push({name:'dailyStudy'}).catch(this.duplicatedRouteCallbackFn)
         e.target.previousSibling.focus()
       },
       enterCenter(e){
         e.preventDefault()
-        this.$router.push({name:'center'})
+        this.$router.push({name:'center'}).catch(this.duplicatedRouteCallbackFn)
         e.target.previousSibling.focus()
       }
     },

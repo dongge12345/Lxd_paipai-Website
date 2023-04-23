@@ -58,7 +58,16 @@
                 return img
             },
             renewWall(){
-                let imgs = [...this.$refs['pictureWall'].children]
+                let imgs
+                try{
+                    imgs = [...this.$refs['pictureWall'].children]
+                }catch(err){
+                    let timer = setTimeout(()=>{
+                        this.renewWall()
+                        clearTimeout(timer)
+                    },100)
+                    return
+                }
                 for(let i in imgs){
                     if(!imgs[i].complete){
                         let timer = setTimeout(()=>{
