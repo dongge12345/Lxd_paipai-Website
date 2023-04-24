@@ -31,7 +31,7 @@
                 <div style="scale:0.5;transform:translateX(calc(100% / 0.5 * (1 - 0.5)  / 2 * -1))">
                     <span style="padding:0px 2px;float:left;margin-top:2px;">标签:</span>
                     <ul style="margin-left:2px;">
-                        <li v-for="tab in articleRelate.tabs" style="display: inline-block;transform:translateY(-3px);padding:2px 6px;border: 2px solid #aaa;color:rgb(45, 161, 207);margin-left:20px;">{{tab}}</li>
+                        <li v-for="tab in articleRelate.tabs" style="display: inline-block;transform:translateY(-3px);padding:2px 6px;border: 2px solid #aaa;color:rgb(45, 161, 207);margin-left:20px;background-color: #fff;">{{tab}}</li>
                     </ul>
                 </div>
             </div>
@@ -110,6 +110,9 @@
             MusicRelax
         },
         methods:{
+            musicPlay(){
+
+            },
             inquireIfTired(){
                 if(confirm('是否听首歌呢？')){
                     if(this.musicTimer){
@@ -160,9 +163,9 @@
         width: var(--leftW);
         height: 100%;
         margin-left:calc(var(--leftW) * -1);
-        background-color: #fff;
     }
     .monthArticles{
+        background-color: #fff;
         height: 160px;
     }
     .monthArticles h4{
@@ -184,6 +187,7 @@
 
     }
     .articleChapter{
+        background-color: #fff;
         margin-top:20px;
     }
     .articleChapter h4{

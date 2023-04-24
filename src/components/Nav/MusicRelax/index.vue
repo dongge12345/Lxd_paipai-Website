@@ -47,6 +47,29 @@ ul {
   display: flex;
   justify-content: space-evenly;
 }
+ul::before{
+  position: absolute;
+  width: 130%;
+  height: 260%;
+  top:-170%;
+  content:'';
+  display: block;
+  /* background-color: red; */
+  border-top:30px solid white;
+  border-right:30px solid white;
+  border-radius: 50% 50% 50% 0;
+  transform:rotate(-45deg);
+}
+ul::after{
+  content:'';
+  width: 115%;
+  height: 100%;
+  top:-20%;
+  /* background-color: red; */
+  position: absolute;
+  border-left: 40px solid white;
+  border-right: 40px solid white;
+}
 ul > li {
   width: 14px;
   height: 60px;
