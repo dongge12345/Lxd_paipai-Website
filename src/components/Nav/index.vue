@@ -34,6 +34,9 @@
             },
         },
         mounted(){
+            this.$bus.$on('askNavH',(value)=>{
+                this.$bus.$emit('navResponseH',this.$refs['nav'].offsetHeight)
+            })
             this.showAfterResize()
             window.addEventListener('resize',()=>{
                 this.showAfterResize()

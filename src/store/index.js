@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import games from './games'
 import photoAlbum from './photoAlbum'
+import dailyStudy from './dailyStudy'
 Vue.use(Vuex)
 const state = {
     indexName:"storeIndex"
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     namespaced:true,
     modules:{
         games,
-        photoAlbum
+        photoAlbum,
+        dailyStudy
     },
     state,
     mutations,

@@ -1,8 +1,8 @@
 <template>
   <div id="lxd_paipai">
-    <Nav />
+    <Nav ref="nav"/>
     <!-- 中间展示部分 -->
-    <router-view name="center" class="indexCenter"></router-view>
+    <router-view name="center" class="indexCenter"></router-view>  
     <MouseMoveAnimation class="mouseMoveAnimation" />
     <canvas class="canvasIndex"></canvas>
     <span class="profilePictureLine"></span>
@@ -83,10 +83,13 @@ export default {
 </script>
 
 <style>
+  html{
+    scroll-behavior: smooth;
+  }
   *{
     padding:0;
     margin:0;
-    box-sizing: border-box
+    box-sizing: border-box;
   }
   ul{
     list-style:none;
@@ -96,7 +99,7 @@ export default {
     height: 100vh;
     background-color: #000000;
     display: flex;
-    flex-direction:column
+    flex-direction:column;
   }
   .canvasIndex{
     position: fixed;

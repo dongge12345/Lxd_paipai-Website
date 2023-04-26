@@ -36,10 +36,13 @@
         watch:{
             year(value){
                 this.$store.dispatch('photoAlbum/getPictures',value)
-            },
-            
+                this.$refs['pictureWall'].style.opacity = 0
+                document.querySelector('.loading').style.display = "block"
+                this.renewWall()
+            }
         },
         mounted(){
+            // 这里其实可以不用的，主要是开发时修改完代码保存既不触发watch又不触发update导致图片墙布局错乱，看着烦。
             this.$refs['pictureWall'].style.opacity = 0
             document.querySelector('.loading').style.display = "block"
             this.renewWall()
@@ -62,13 +65,16 @@
                 try{
                     imgs = [...this.$refs['pictureWall'].children]
                 }catch(err){
+                    // 此时可能图片墙divDom未挂载，为空
                     let timer = setTimeout(()=>{
                         this.renewWall()
                         clearTimeout(timer)
                     },100)
                     return
                 }
+                
                 for(let i in imgs){
+                    // 判断图片是否加载完成的关键代码
                     if(!imgs[i].complete){
                         let timer = setTimeout(()=>{
                             this.renewWall()
@@ -78,13 +84,16 @@
                     }
                 }
 
-
                 let wall = this.$refs['pictureWall']
                 if(imgs.length){
                     let wallW = wall.offsetWidth
                     let picW  = 21
                     imgs[0].style.width = picW + "%"
                     picW = imgs[0].offsetWidth
+                    // 进入TimeCard后离开再重进，由于离开时没有销毁，此时照片墙div存在，会进入到最后的图片布局代码。此处判断，如果照片墙divDom元素的子元素数量为0，直接结束布局函数。
+                    if(picW === 0){
+                        return
+                    }
                     let columnNum = Math.floor(wallW / picW)
                     let crackW = wallW % picW / (columnNum + 1)
                     let crackH = 10
@@ -112,6 +121,7 @@
                     },[columnH[0],0])[0] + crackH + "px"
 
                 }
+                
                 this.$refs['pictureWall'].style.opacity = 1
                 document.querySelector('.loading').style.display = "none"
 

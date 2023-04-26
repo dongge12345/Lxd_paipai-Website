@@ -55,8 +55,8 @@ ul::before{
   content:'';
   display: block;
   /* background-color: red; */
-  border-top:30px solid white;
-  border-right:30px solid white;
+  border-top:30px solid black;
+  border-right:30px solid black;
   border-radius: 50% 50% 50% 0;
   transform:rotate(-45deg);
 }
@@ -67,8 +67,8 @@ ul::after{
   top:-20%;
   /* background-color: red; */
   position: absolute;
-  border-left: 40px solid white;
-  border-right: 40px solid white;
+  border-left: 40px solid black;
+  border-right: 40px solid black;
 }
 ul > li {
   width: 14px;
