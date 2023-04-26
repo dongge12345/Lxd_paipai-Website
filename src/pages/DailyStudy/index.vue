@@ -1,5 +1,5 @@
 <template>
-    <div class="dailyStudy">
+    <div class="dailyStudy" ref="dailyStudy">
         <!-- 主体页面布局：仿CSDN页面布局 -->
         <div class="container" ref="container">
             <div class="aside" ref="aside">
@@ -166,8 +166,7 @@
             scrollToSection(e){
                 let sectionDoms = this.$refs['section']
                 let index = e.target.getAttribute('value')
-                document.documentElement.scrollTop = sectionDoms[index].offsetTop
-
+                this.$refs['dailyStudy'].scrollTop = sectionDoms[index].offsetTop
             },
             bindingScrollToEvent(){
                 // 获取段落dom和目录dom，绑定点击事件实现自动定位。
@@ -193,43 +192,47 @@
                 let asideT = asideDom.offsetTop
                 let containerT = containerDom.offsetTop
                 let lastScrollTop = 0
-                window.addEventListener('scroll',function(){
-                    let winT = document.documentElement.scrollTop
+                let vc = this
+                this.$refs['dailyStudy'].addEventListener('scroll',function(){
+                    let navH
+                    vc.$bus.$on('navResponseH',function(value){
+                        navH = value
+                    })
+                    vc.$bus.$emit('askNavH')
+                    let dailyStudyScrollT = this.scrollTop
                     // 这里最终使用的为window的clientHeight作为窗口的高度，而不用offsetHeight作为高度，是由于clientHeight是可视窗口高度(不包括被滚动条覆盖的高度)，而offsetHeight为浏览器窗口高度，因此包括了滚动条。我们实际的div中并不包括该滚动条。
                     let winOffsetHeight = document.documentElement.offsetHeight
                     let winClientH = document.documentElement.clientHeight
                     let contentH = contentDom.offsetHeight
                     if(asideH < contentH){
-                        let upOrDown = winT - lastScrollTop > 0 ? false : true
-                        lastScrollTop = winT
+                        let upOrDown = dailyStudyScrollT - lastScrollTop > 0 ? false : true
+                        lastScrollTop = dailyStudyScrollT
                         // 如果为往下滚
                         if(!upOrDown){
                             if(asideH > winClientH){
-                                if(winT < asideH + containerT + 20 - winClientH){
-                                }else if(winT + winClientH <= contentH + contentT){
-                                    asideDom.style.marginTop = winT - containerT -20 - (asideH - winClientH) + "px"
+                                if(dailyStudyScrollT < asideH + containerT + 20 - winClientH){
+                                }else if(dailyStudyScrollT + winClientH <= contentH + contentT){
+                                    asideDom.style.marginTop = dailyStudyScrollT - containerT -20 - (asideH - winClientH) + "px"
                                 }
                             }else{
-                                if(asideT < winT && winT + winClientH < contentH + contentT){
-                                    asideDom.style.marginTop = winT - containerT - 20 + "px"
-                                }else if(winT + winClientH > contentH + contentT){
-                                    asideDom.style.marginTop = contentH -  document.documentElement.clientHeight + "px"
+                                if(dailyStudyScrollT > 20){
+                                    asideDom.style.marginTop = dailyStudyScrollT - 20  + "px"
                                 }
                             }
                             
                         }else{
                             if(asideH > winClientH){
-                                if(contentH + contentT < winT){
-                                }else if(winT > containerT + 20 + asideH - winClientH){
-                                    asideDom.style.marginTop = winT - containerT -20 - (asideH - winClientH) + "px"
+                                if(contentH + contentT < dailyStudyScrollT){
+                                }else if(dailyStudyScrollT > containerT + 20 + asideH - winClientH){
+                                    asideDom.style.marginTop = dailyStudyScrollT - containerT -20 - (asideH - winClientH) + "px"
                                 }else{
                                     asideDom.style.marginTop = "0px"
                                 }
                             }else{
-                                if(asideT < winT && winT + winClientH < contentH + contentT){
-                                    asideDom.style.marginTop = winT - containerT - 20 + "px"
-                                }else if(winT < containerT){
-                                    asideDom.style.marginTop = "0px"
+                                if(dailyStudyScrollT > 20){
+                                    asideDom.style.marginTop = dailyStudyScrollT - 20  + "px"
+                                }else{
+                                    asideDom.style.marginTop = "0"
                                 }
                             }
                         }
@@ -266,19 +269,20 @@
     }
     .dailyStudy{
         overflow-x:hidden;
+        scroll-behavior: smooth;
     }
     .container{
         width: 100%;
         height: 100vh;
         background-color: #f5f6f7;
-        padding:20px 250px 0 300px;
+        padding:20px 350px 0 400px;
         /* overflow-x:hidden; */
     }
 
     .aside{
         float:left;
-        width: 260px;
-        margin-left:-260px;
+        width: 300px;
+        margin-left:-310px;
 
     }
     .monthArticles{
@@ -295,7 +299,7 @@
         display: grid;
         grid-template-columns:auto auto;
         grid-gap:10px;
-        margin-left:20px;
+        margin-left:40px;
         margin-top:20px;
     }
     .monthArticles ul li:hover{
@@ -318,7 +322,7 @@
         line-height: 34px;
     }
     .oneMonthArticles ul li{
-        padding-left:30px;
+        padding-left:40px;
     }
     .oneMonthArticles ul li:hover{
         background-color: #c0c0c0;
@@ -347,7 +351,7 @@
     }
     
     .articleChapter ul{
-        margin:5px 40px;
+        margin:5px 60px;
     }
     .articleChapter ul li{
         font-size: 0.7em;
@@ -417,12 +421,12 @@
     }
 
     .advertisement{
-        width: 220px;
+        width: 320px;
         height: 50vh;
         background-color: #fff;
         float:left;
         margin-left:20px;
-        margin-right:-240px;
+        margin-right:-340px;
         display: flex;
         align-items: center;
         justify-content: center;
