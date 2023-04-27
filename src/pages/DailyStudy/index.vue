@@ -108,8 +108,7 @@
                     // 有个问题，多次调用高度会越来越小,这里给chapterUI设置自定义属性，修改过高度后就将ifChangeH修改为true，后面再遇到就不修改了，当然在每次更改文章的时候需要将其重新设置为null
                     // if(this.$refs['chapterUl'].getAttribute('ifChangeH') === null){
                     this.$refs['chapterUl'].style.height = this.$refs['chapterUl'].offsetHeight * 0.7 + "px"
-                    //     this.$refs['chapterUl'].setAttribute('ifChangeH',true)
-                    // }
+                    this.imgLoaded()
                     // 重新执行点击scroll事件
                     this.bindingScrollToEvent()
                     // 监听鼠标的滚动事件
@@ -184,22 +183,22 @@
                 }
             },
             bindingWindowScroll(){
-                let asideDom = this.$refs['aside']
-                let contentDom = this.$refs['content']
-                let containerDom = this.$refs['container']
-                let contentT = contentDom.offsetTop
-                let asideH = asideDom.offsetHeight
-                let asideT = asideDom.offsetTop
-                let containerT = containerDom.offsetTop
                 let lastScrollTop = 0
                 let vc = this
-                this.$refs['dailyStudy'].addEventListener('scroll',function(){
+                this.$refs['dailyStudy'].addEventListener('scroll',()=>{
                     let navH
                     vc.$bus.$on('navResponseH',function(value){
                         navH = value
                     })
                     vc.$bus.$emit('askNavH')
-                    let dailyStudyScrollT = this.scrollTop
+                    let asideDom = this.$refs['aside']
+                    let contentDom = this.$refs['content']
+                    let containerDom = this.$refs['container']
+                    let contentT = contentDom.offsetTop
+                    let asideH = asideDom.offsetHeight
+                    let asideT = asideDom.offsetTop
+                    let containerT = containerDom.offsetTop
+                    let dailyStudyScrollT = this.$refs['dailyStudy'].scrollTop
                     // 这里最终使用的为window的clientHeight作为窗口的高度，而不用offsetHeight作为高度，是由于clientHeight是可视窗口高度(不包括被滚动条覆盖的高度)，而offsetHeight为浏览器窗口高度，因此包括了滚动条。我们实际的div中并不包括该滚动条。
                     let winOffsetHeight = document.documentElement.offsetHeight
                     let winClientH = document.documentElement.clientHeight
@@ -209,19 +208,21 @@
                         lastScrollTop = dailyStudyScrollT
                         // 如果为往下滚
                         if(!upOrDown){
-                            if(asideH > winClientH){
+                            if(asideH > winClientH - navH){
                                 if(dailyStudyScrollT < asideH + containerT + 20 - winClientH){
                                 }else if(dailyStudyScrollT + winClientH <= contentH + contentT){
                                     asideDom.style.marginTop = dailyStudyScrollT - containerT -20 - (asideH - winClientH) + "px"
                                 }
                             }else{
-                                if(dailyStudyScrollT > 20){
+                                if(dailyStudyScrollT > 20 && dailyStudyScrollT < 20 + contentH - (winClientH - navH)){
                                     asideDom.style.marginTop = dailyStudyScrollT - 20  + "px"
+                                }else if( dailyStudyScrollT > 20 + contentH - (winClientH - 20)){
+                                    asideDom.style.marginTop = contentH - (winClientH - navH)  + "px"
                                 }
                             }
                             
                         }else{
-                            if(asideH > winClientH){
+                            if(asideH > winClientH - navH){
                                 if(contentH + contentT < dailyStudyScrollT){
                                 }else if(dailyStudyScrollT > containerT + 20 + asideH - winClientH){
                                     asideDom.style.marginTop = dailyStudyScrollT - containerT -20 - (asideH - winClientH) + "px"
@@ -251,8 +252,15 @@
             this.$store.dispatch('dailyStudy/getArticle',{yearMonth:'202304',articleNum:1})
         },
         mounted(){
+            window.addEventListener('resize',()=>{
+                this.imgLoaded()
+            })
+        },
+        beforeUPdate(){
+
         },
         updated(){
+            this.$refs['dailyStudy'].scrollTop = 0
         },
         beforeDestroy(){
             if(this.musicTimer){
@@ -283,7 +291,7 @@
         float:left;
         width: 300px;
         margin-left:-310px;
-
+        /* transition:all 0.05s linear; */
     }
     .monthArticles{
         background-color: #fff;
@@ -368,7 +376,7 @@
         margin-left:10px;
         width: 100%;
         min-width: 600px;
-        min-height: 100%;
+        /* min-height: 100%; */
         background-color: #fff;
         padding:0 20px 0px 20px;
     }
